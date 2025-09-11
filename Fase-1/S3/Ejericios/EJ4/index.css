@@ -1,0 +1,39 @@
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);  /* 5 columnas con igual proporción */
+  grid-template-rows: repeat(3, 1fr);     /* 3 filas con igual proporción */
+  gap: 0;                                /* sin espacio entre celdas */
+  width: 100vw;                          /* ancho total del viewport */
+  height: 100vh;                         /* altura total del viewport */
+  max-width: 1200px;                     /* máximo ancho */
+  max-height: 720px;                     /* máximo alto */
+  border: 1px solid #000;
+  box-sizing: border-box;                /* incluye borde en width/height */
+  margin: 0 auto;                       /* centra horizontalmente */
+}
+
+
+.div2 { 
+  grid-area: 1 / 3 / 2 / 6; 
+  background-color: #66FF66; /* verde claro */
+}
+
+.div3 { 
+  grid-area: 2 / 3 / 4 / 5; 
+  background-color: #6666FF; /* azul claro */
+}
+
+.div4 { 
+  grid-area: 2 / 5 / 3 / 6; 
+  background-color: #FFFF66; /* amarillo claro */
+}
+
+.div5 { 
+  grid-area: 3 / 5 / 4 / 6; 
+  background-color: #66FFFF; /* cian claro */
+}
+
+.div6 { 
+  grid-area: 3 / 1 / 4 / 3; 
+  background-color: #FF66FF; /* magenta claro */
+}

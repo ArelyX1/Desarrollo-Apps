@@ -18,13 +18,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #fff;
+  color: #ffffff;
   font-size: .8rem;
   justify-content: space-between;
 }
 
 .tw-followCard + .tw-followCard {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .tw-followCard-info {
@@ -45,12 +45,12 @@
 
 .tw-followCard-button {
   cursor: pointer;
-  margin-left: 16px;
+  /*margin-left: 20px;*/
   border-radius: 999px;
   padding: 10px 16px;
   font-weight: bold;
   border: 1px solid #000;
-  transition: .3s ease background-color;
+  transition: .3s ease all;
 }
 
 .tw-followCard-button:hover {

@@ -33,6 +33,13 @@ export function App () {
           </TwitterFollowCard>
         ))
       }
+      <TwitterFollowCard
+        userName='pPK'
+        initialIsFollowing={true}
+      >
+        El Papu
+
+      </TwitterFollowCard>
     </section>
   )
 }
