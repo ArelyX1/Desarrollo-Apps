@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solución Actividad 5 - Uso de Arrays</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 2em; 
+            background-color: #f0e8f8; 
+            color: #333; 
+        }
+        h1, h2 { 
+            color: #6a4c9c;
+            border-bottom: 2px solid #dcd0ff;
+            padding-bottom: 5px;
+        }
+        .container { 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            max-width: 800px;
+            margin: auto;
+        }
+        .output { 
+            margin-top: 15px; 
+            padding: 15px; 
+            border: 1px dashed #dcd0ff; 
+            background: #f9f6ff; 
+            border-radius: 8px; 
+            white-space: pre-wrap; 
+            font-family: 'Consolas', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        button { 
+            padding: 10px 18px; 
+            margin: 8px 5px; 
+            border: none; 
+            background-color: #8e7cc3; 
+            color: white; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        button:hover { 
+            background-color: #6a4c9c; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Solución de la Actividad 5: Uso de Arrays</h1>
+        
+        <h2>a) Creación de Arrays</h2>
+        <p>A continuación se muestran los 3 arrays creados con diferentes métodos, como se especifica en la guía.</p>
+        <div id="creation-output" class="output">Los resultados de la creación aparecerán aquí.</div>
+
+        <h2>b) Manipulación de Arrays</h2>
+        <p>Usa los botones para aplicar los métodos de manipulación sobre los arrays creados.</p>
+        <button onclick="manipulateNumericArray()">Manipular Array Numérico</button>
+        <button onclick="manipulateStringArray()">Manipular Array de Strings</button>
+        <div id="manipulation-output" class="output">Los resultados de la manipulación aparecerán aquí.</div>
+    </div>
+
+    <script>
+        // --- a) CREACIÓN DE ARRAYS ---
+
+        // 1. Crear 3 arrays diferentes bajo los 3 métodos de creación que existen para los arreglos.
+        
+        // Método 1: Array Literal `[]` - para el array de strings.
+        const arrayStrings = ["Lunes", "Martes", "Miércoles"];
+
+        // Método 2: Constructor `new Array()` con elementos - para el array de objetos.
+        const arrayObjetos = new Array(
+            { id: 1, producto: "Laptop" },
+            { id: 2, producto: "Mouse" },
+            { id: 3, producto: "Teclado" }
+        );
+
+        // Método 3: Constructor `new Array()` con tamaño definido - para el array numérico.
+        const arrayNumerico = new Array(5);
+
+        // 2. Hacer rutinas para el ingreso de datos a los 3 arreglos.
+        // Para el array numérico, lo poblaremos usando un bucle.
+        for (let i = 0; i < arrayNumerico.length; i++) {
+            arrayNumerico[i] = (i + 1) * 10; // Llenado automático para esta demostración.
+        }
+        
+        // 4. Visualizar los resultados en la página web.
+        function displayCreationResults() {
+            const outputDiv = document.getElementById('creation-output');
+            
+            let htmlOutput = '<h3>Arrays Creados Exitosamente:</h3>';
+            htmlOutput += '<strong>1. Array de Números (con new Array(size)):</strong>\n';
+            htmlOutput += JSON.stringify(arrayNumerico) + '\n\n';
+            
+            htmlOutput += '<strong>2. Array de Strings (con []):</strong>\n';
+            htmlOutput += JSON.stringify(arrayStrings) + '\n\n';
+
+            htmlOutput += '<strong>3. Array de Objetos (con new Array(elementos)):</strong>\n';
+            htmlOutput += JSON.stringify(arrayObjetos, null, 2);
+
+            outputDiv.innerHTML = htmlOutput;
+
+            // También en consola como buena práctica de depuración.
+            console.log("--- a) Creación de Arrays ---");
+            console.log("Array Numérico:", arrayNumerico);
+            console.log("Array de Strings:", arrayStrings);
+            console.log("Array de Objetos:", arrayObjetos);
+        }
+
+        // --- b) MANIPULACIÓN DE ARRAYS ---
+        // 1. Aplicar sobre los arreglos creados los diferentes tipos de acciones.
+        function manipulateNumericArray() {
+            const outputDiv = document.getElementById('manipulation-output');
+            let workArray = [...arrayNumerico]; // Copia para no modificar el original en cada click
+            let htmlOutput = `<h3>Manipulando Array Numérico: ${JSON.stringify(workArray)}</h3>`;
+
+            // Añadir un elemento al final (`push`)
+            workArray.push(60);
+            htmlOutput += `<p>Después de <strong>push(60)</strong>: ${JSON.stringify(workArray)}</p>`;
+
+            // Eliminar el último elemento (`pop`)
+            let poppedElement = workArray.pop();
+            htmlOutput += `<p>Después de <strong>pop()</strong> (elemento eliminado: ${poppedElement}): ${JSON.stringify(workArray)}</p>`;
+
+            // Añadir un elemento al principio (`unshift`)
+            workArray.unshift(5);
+            htmlOutput += `<p>Después de <strong>unshift(5)</strong>: ${JSON.stringify(workArray)}</p>`;
+
+            // Eliminar el primer elemento (`shift`)
+            let shiftedElement = workArray.shift();
+            htmlOutput += `<p>Después de <strong>shift()</strong> (elemento eliminado: ${shiftedElement}): ${JSON.stringify(workArray)}</p>`;
+
+            outputDiv.innerHTML = htmlOutput;
+            console.log("--- b) Manipulación Array Numérico ---");
+            console.log("Estado final del array de trabajo:", workArray);
+        }
+        
+        function manipulateStringArray() {
+            const outputDiv = document.getElementById('manipulation-output');
+            let workArray = [...arrayStrings]; // Copia
+            let htmlOutput = `<h3>Manipulando Array de Strings: ${JSON.stringify(workArray)}</h3>`;
+
+            // Encontrar el índice de un elemento (`indexOf`)
+            let index = workArray.indexOf("Martes");
+            htmlOutput += `<p>El índice de <strong>"Martes"</strong> es: ${index} (usando <strong>indexOf</strong>)</p>`;
+
+            let notFoundIndex = workArray.indexOf("Viernes");
+            htmlOutput += `<p>El índice de <strong>"Viernes"</strong> (que no existe) es: ${notFoundIndex}</p>`;
+            
+            // Usar push y pop también
+            workArray.push("Jueves");
+            htmlOutput += `<p>Después de <strong>push("Jueves")</strong>: ${JSON.stringify(workArray)}</p>`;
+            
+            let removedDay = workArray.pop();
+            htmlOutput += `<p>Después de <strong>pop()</strong> (elemento eliminado: "${removedDay}"): ${JSON.stringify(workArray)}</p>`;
+
+
+            outputDiv.innerHTML = htmlOutput;
+            console.log("--- b) Manipulación Array de Strings ---");
+            console.log("Estado final del array de trabajo:", workArray);
+        }
+
+        // Ejecutar al cargar la página
+        window.onload = function() {
+            // 3. Grabar y probar los cambios hechos en el código.
+            // 5. Verificar los resultados y corregir errores.
+            displayCreationResults();
+        };
+
+    </script>
+
+</body>
+</html>

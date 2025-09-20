@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solución Actividad 2 - Recursos del Lenguaje</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 2em; 
+            background-color: #fceefd; 
+            color: #333; 
+        }
+        h1, h2 { 
+            color: #a348a3;
+            border-bottom: 2px solid #eab9ea;
+            padding-bottom: 5px;
+        }
+        .container { 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+            max-width: 900px;
+            margin: auto;
+        }
+        .output { 
+            margin-top: 15px; 
+            padding: 15px; 
+            border: 1px dashed #eab9ea; 
+            background: #fff9ff; 
+            border-radius: 8px; 
+            white-space: pre-wrap; 
+            font-family: 'SF Mono', 'Consolas', 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 0.9em;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        button { 
+            padding: 10px 18px; 
+            margin: 10px 5px 10px 0; 
+            border: none; 
+            background-color: #c774c7; 
+            color: white; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        button:hover { 
+            background-color: #a348a3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Solución de la Actividad 2: Uso de Recursos del Lenguaje</h1>
+        
+        <p>Presiona los botones para ejecutar y ver el resultado de cada sección del ejercicio 2, tal como se pide en la guía [1].</p>
+
+        <!-- Sección a) -->
+        <h2>a) Uso de Variables y Constantes (Ámbito de Bloque)</h2>
+        <button onclick="runPartA()">Demostrar Ámbito de Bloque</button>
+        <div id="output-a" class="output">Aquí se mostrará la demostración del ámbito de bloque...</div>
+
+        <!-- Sección b) -->
+        <h2>b) Elevación de Variables (Hoisting)</h2>
+        <button onclick="runPartB()">Demostrar Hoisting</button>
+        <div id="output-b" class="output">Aquí se mostrará la demostración de hoisting...</div>
+
+        <!-- Sección c) -->
+        <h2>c) Uso de console.log y Scope</h2>
+        <button onclick="runPartC()">Demostrar Scope</button>
+        <div id="output-c" class="output">Aquí se mostrará la demostración de scope en funciones anidadas...</div>
+        
+        <!-- Sección d) -->
+        <h2>d) Uso y Cambio de Tipos de Datos</h2>
+        <button onclick="runPartD()">Demostrar Tipos de Datos</button>
+        <div id="output-d" class="output">Aquí se mostrará la demostración de tipos de datos...</div>
+
+    </div>
+
+    <script>
+        // Función para renderizar el resultado en el div correspondiente
+        function displayResult(part, content) {
+            document.getElementById(`output-${part}`).innerHTML = content;
+        }
+
+        // --- a) USO DE VARIABLES Y CONSTANTES ---
+        function runPartA() {
+            let result = `<h3>Demostración de Ámbito de Bloque</h3>`;
+            result += `<p>Creamos un bloque de código y declaramos una variable con <code>let</code> y una constante con <code>const</code> dentro de él [1].</p>`;
+            
+            result += `<div class="code-block">{<br>  let variableBloque = "Vivo solo dentro del bloque";<br>  const constanteBloque = "Mi valor es fijo y local";<br>  console.log(variableBloque); // Funciona<br>  console.log(constanteBloque); // Funciona<br>}</div>`;
+
+            let outputInside = "";
+            {
+                let variableBloque = "Vivo solo dentro del bloque";
+                const constanteBloque = "Mi valor es fijo y local";
+                outputInside += `<strong>Dentro del bloque:</strong><br>`;
+                outputInside += `-> variableBloque: "${variableBloque}"<br>`;
+                outputInside += `-> constanteBloque: "${constanteBloque}"<br><br>`;
+            }
+            result += outputInside;
+
+            result += `<p>Ahora, intentamos acceder a ellas <strong>fuera</strong> del bloque:</p>`;
+            
+            try {
+                console.log(variableBloque);
+            } catch (e) {
+                result += `-> Intento de acceder a <code>variableBloque</code>: <strong>${e.message}</strong><br>`;
+            }
+            try {
+                console.log(constanteBloque);
+            } catch (e) {
+                result += `-> Intento de acceder a <code>constanteBloque</code>: <strong>${e.message}</strong><br>`;
+            }
+
+            result += `<p>Esto demuestra que <code>let</code> y <code>const</code> tienen <strong>ámbito de bloque</strong> y no son accesibles desde fuera [1].</p>`;
+            displayResult('a', result);
+        }
+
+        // --- b) ELEVACIÓN DE VARIABLES (HOISTING) ---
+        function runPartB() {
+            let result = `<h3>Demostración de Hoisting (Elevación)</h3>`;
+            
+            // Primer caso
+            result += `<p><strong>Caso 1:</strong> Se intenta usar una variable declarada con <code>var</code> antes de su asignación.</p>`;
+            result += `<div class="code-block">console.log(x);<br>var x = 3;</div>`;
+            result += `<p>Resultado: <strong>undefined</strong>. La <em>declaración</em> <code>var x;</code> es "elevada" al principio de su ámbito, pero su <em>asignación</em> <code>x = 3</code> no. Por eso, al momento del <code>console.log</code>, la variable existe pero no tiene valor [1].</p><hr>`;
+            
+            // Segundo caso
+            result += `<p><strong>Caso 2:</strong> Hoisting dentro de una función autoejecutable.</p>`;
+            result += `<div class="code-block">var myvar = 'my value';<br>(function() {<br>  console.log(myvar);<br>  var myvar = 'local value';<br>})();</div>`;
+            
+            var myvar = 'my value';
+            var functionOutput = (function() {
+                // `myvar` dentro de esta función es `undefined` en esta línea
+                // debido al hoisting de `var myvar` que está más abajo.
+                return myvar; 
+            })();
+             result += `<p>Resultado: <strong>undefined</strong>. Dentro de la función, la declaración <code>var myvar;</code> es elevada a la parte superior de su propio ámbito (el de la función), sombreando la variable global. Por lo tanto, cuando <code>console.log</code> se ejecuta, está viendo la variable local que aún no ha sido asignada [1].</p>`;
+
+            displayResult('b', result);
+        }
+
+        // --- c) USO DE CONSOLE.LOG Y SCOPE ---
+        function runPartC() {
+            let result = `<h3>Demostración de Scope (Ámbito)</h3>`;
+            result += `<p>Creamos funciones anidadas para verificar el alcance de las variables [1].</p>`;
+            
+            let globalVar = "Soy una variable global";
+            let unassignedVar;
+            
+            function funcionPadre() {
+                let padreVar = "Soy una variable de la función padre";
+                
+                function funcionHija() {
+                    let hijaVar = "Soy una variable de la función hija";
+                    
+                    // La función hija puede acceder a todas las variables de los ámbitos superiores
+                    result += `<strong>Desde la función hija:</strong><br>`;
+                    result += `-> Acceso a <code>hijaVar</code>: "${hijaVar}"<br>`;
+                    result += `-> Acceso a <code>padreVar</code>: "${padreVar}"<br>`;
+                    result += `-> Acceso a <code>globalVar</code>: "${globalVar}"<br>`;
+                }
+                
+                funcionHija();
+                
+                // La función padre NO puede acceder a las variables de la hija
+                try {
+                    console.log(hijaVar);
+                } catch(e) {
+                     result += `<br><strong>Desde la función padre:</strong><br>`;
+                     result += `-> Intento de acceder a <code>hijaVar</code>: <strong>${e.message}</strong><br>`;
+                }
+            }
+            
+            result += `<p>Una variable sin asignar (<code>unassignedVar</code>) tiene el valor: <strong>${unassignedVar}</strong></p><hr>`;
+            funcionPadre();
+            displayResult('c', result);
+        }
+
+        // --- d) USO Y CAMBIO DE TIPOS DE DATOS ---
+        function runPartD() {
+            let result = `<h3>Demostración de Tipos de Datos y Conversión</h3>`;
+
+            // Tipado dinámico
+            result += `<strong>1. Tipado Dinámico</strong><p>JavaScript es de tipado dinámico: una variable puede cambiar de tipo [1].</p>`;
+            let answer = 42;
+            result += `-> <code>let answer = 42;</code> // typeof: <strong>${typeof answer}</strong><br>`;
+            answer = "Gracias por todo el pescado...";
+            result += `-> <code>answer = "..."</code> // typeof: <strong>${typeof answer}</strong><br>`;
+            
+            // parseInt
+            result += `<hr><strong>2. Uso de parseInt()</strong><p>Convierte una cadena a un entero, especificando la base [1].</p>`;
+            const parseIntTests = [
+                ["'F', 16", parseInt('F', 16)],
+                ["'17', 8", parseInt('17', 8)],
+                ["'15.99', 10", parseInt('15.99', 10)],
+                ["'FXX123', 16", parseInt('FXX123', 16)],
+                ["'1111', 2", parseInt('1111', 2)],
+                ["'Hello', 8", parseInt('Hello', 8)],
+            ];
+            parseIntTests.forEach(test => {
+                result += `-> <code>parseInt(${test[0]})</code>  =>  <strong>${test[1]}</strong><br>`;
+            });
+
+            // toString
+            result += `<hr><strong>3. Uso de toString()</strong><p>Convierte un número a una cadena, opcionalmente en otra base [1].</p>`;
+            result += `-> <code>(10).toString()</code>  =>  <strong>"${(10).toString()}"</strong><br>`;
+            result += `-> <code>(45).toString()</code>  =>  <strong>"${(45).toString()}"</strong><br>`;
+            let x = 7;
+            result += `-> <code>(7).toString(2)</code>  =>  <strong>"${x.toString(2)}"</strong> (en base binaria)<br>`;
+
+            displayResult('d', result);
+        }
+
+    </script>
+</body>
+</html>
